@@ -1,0 +1,117 @@
+---
+import SkillItem from "@components/elements/SkillItem.astro";
+import { getCollection } from "astro:content";
+
+const { t}  = Astro.props;
+const currentLocale = Astro.currentLocale;
+
+const PROJECTS = await getCollection('projects');
+const projects = PROJECTS.filter(project => project.id.includes(currentLocale));
+---
+
+<section id="projects-section" class="min-h-6xl max-w-[80%] 2xl:max-w-6xl mx-auto pb-12 flex flex-col justify-start items-center dark:bg-neutral-800 relative">
+    <a id="projects" class="absolute -top-20"></a>
+	<header class="flex flex-col items-center justify-center w-full">
+        <h1 class ="font-extrabold text-4xl sm:text-5xl cursor-default py-2">{t.globals.projectTitle}</h1>
+		<h2 class ="leading-8 tracking-wide font-light text-primary dark:text-accent text-xl sm:text-2xl mt-6 text-center">
+			<em>"{t.globals.projectDescription}"</em>
+		</h2>
+    </header>
+	<div class="mt-10 md:grid md:grid-cols-2 gap-4 md:mt-16 xl:grid-cols-3 xl:grid-rows-3 flex flex-col gap-y-4">
+		<div class="relative md:row-span-2 xl:row-span-3 hover:scale-105 cursor-pointer transition">
+			<div class="relative flex h-full flex-col z-20 overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+				<div class="px-8 pt-8 pb-3 md:px-10 md:pt-10 md:pb-0">
+					<h1 class="mt-2 text-lg font-extrabold tracking-widest max-lg:text-center text-project1 uppercase">{projects[0].data.title}</h1>
+					<p class="mt-2 max-w-lg text-sm/6  text-neutral-500 dark:text-white font-light max-lg:text-center">{projects[0].data.description}</p>
+				</div>
+				<div class="px-8 pt-3">
+					<ul class="flex flex-row flex-wrap justify-center lg:justify-between w-full gap-2">
+						{projects[0].data.skills.map(skill => (
+							<SkillItem skill={skill} t={t} mode="h-no-label"/>
+						))}
+					</ul>
+				</div>
+				<div class="@container relative min-h-[30rem] md:min-h-[20rem] w-full grow max-xl:mx-auto max-xl:max-w-sm">
+					<div class="absolute inset-x-10 top-5 bottom-0 overflow-hidden rounded-t-[40px] border-x-[10px] border-t-[10px] border-neutral-700 dark:border-neutral-800 bg-neutral-800 shadow-2xl">
+						<img class="size-full object-cover object-top" src={projects[0].data.image} alt={projects[0].data.title}>
+					</div>
+				</div>
+			</div>
+			<div class="absolute inset-px rounded-lg ring-1 shadow-sm ring-black/5 max-md:rounded-t-[2rem] md:rounded-tl-[2rem] lg:rounded-l-[2rem] bg-neutral-50 dark:bg-neutral-700"></div>
+		</div>
+		<div class="relative hover:scale-105  cursor-pointer transition">
+			<div class="relative flex h-full flex-col z-20 overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+				<div class="px-8 pt-8 md:px-10 md:pt-10">
+					<p class="mt-2 text-lg font-extrabold tracking-widest max-lg:text-center uppercase text-project2">{projects[1].data.title}</p>
+					<p class="mt-2 max-w-lg text-sm/6  text-neutral-500 dark:text-white max-lg:text-center font-light">{projects[1].data.description}</p>
+				</div>
+				<div class="px-8 pt-3 pb-3">
+					<ul class="flex flex-row flex-wrap justify-center lg:justify-between w-full gap-2">
+						{projects[1].data.skills.map(skill => (
+							<SkillItem skill={skill} t={t} mode="h-no-label"/>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class="absolute inset-px rounded-lg ring-1 shadow-sm ring-black/5 md:rounded-tr-[2rem] xl:rounded-lg bg-neutral-50 dark:bg-neutral-700"></div>
+		</div>
+		<div class="relative row-span-2  xl:col-start-2 hover:scale-105 cursor-pointer transition">
+			<div class="relative flex h-full flex-col z-20 overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+				<div class="px-8 pt-8 md:px-10 md:pt-10">
+					<p class="mt-2 text-lg font-extrabold tracking-widest max-lg:text-center uppercase text-project3">{projects[2].data.title}</p>
+					<p class="mt-2 max-w-lg text-sm/6  text-neutral-500 dark:text-white max-lg:text-center font-light">{projects[2].data.description}</p>
+				</div>
+				<div class="px-8 pt-3 pb-3">
+					<ul class="flex flex-row flex-wrap justify-center lg:justify-between w-full gap-2">
+						{projects[2].data.skills.map(skill => (
+							<SkillItem skill={skill} t={t} mode="h-no-label"/>
+						))}
+					</ul>
+				</div>
+				<div class="@container relative h-[16rem] md:h-[8rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
+					<div class="absolute inset-x-8 top-5 bottom-10 overflow-hidden rounded-[40px] border-x-[10px] border-[10px] border-neutral-700 dark:border-neutral-800 bg-neutral-900 shadow-2xl">
+						<img class="size-full object-cover object-top" src={projects[2].data.image} alt={projects[2].data.title}>
+					</div>
+				</div>
+			</div>
+			<div class="absolute inset-px rounded-lg md:rounded-bl-[2rem] xl:rounded-lg ring-1 shadow-sm ring-black/5 bg-neutral-50 dark:bg-neutral-700"></div>
+		</div>
+		<div class="relative lg:row-span-2 xl:col-start-3 xl:row-start-1  hover:scale-105 cursor-pointer transition">
+			<div class="relative flex h-full flex-col z-20 overflow-hidden rounded-lg md:rounded-br-[2rem] xl:rounded-lg">
+				<div class="px-8 pt-8 pb-3 md:px-10 md:pt-10 md:pb-0">
+					<p class="mt-2 text-lg font-extrabold tracking-widest max-lg:text-center text-project4 uppercase">{projects[3].data.title}</p>
+					<p class="mt-2 max-w-lg text-sm/6  text-neutral-500 dark:text-white font-light max-lg:text-center">{projects[3].data.description}</p>
+				</div>
+				<div class="px-8 pt-3 pb-3">
+					<ul class="flex flex-row flex-wrap justify-center lg:justify-between w-full gap-2">
+						{projects[3].data.skills.map(skill => (
+							<SkillItem skill={skill} t={t} mode="h-no-label"/>
+						))}
+					</ul>
+				</div>
+				<div class="relative w-full grow max-lg:mx-auto max-lg:max-w-sm">
+					<div class="">
+						<img class="size-full object-cover object-top" src={projects[3].data.image} alt={projects[3].data.title}>
+					</div>
+				</div>
+			</div>
+			<div class="absolute inset-px rounded-lg md:rounded-br-[2rem] xl:rounded-lg xl:rounded-tr-[2rem] ring-1 shadow-sm ring-black/5 bg-neutral-50 dark:bg-neutral-700"></div>
+		</div>
+		<div class="relative md:col-start-2 md:row-start-2 xl:row-start-3 xl:col-start-3  hover:scale-105 cursor-pointer transition">
+			<div class="relative flex h-full flex-col z-20 overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+				<div class="px-8 pt-8 md:px-10 md:pt-10">
+					<p class="mt-2 text-lg font-extrabold tracking-widest max-lg:text-center uppercase text-project5">{projects[4].data.title}</p>
+					<p class="mt-2 max-w-lg text-sm/6 text-neutral-500 dark:text-white max-lg:text-center font-light">{projects[4].data.description}</p>
+				</div>
+				<div class="px-8 pt-3 pb-3">
+					<ul class="flex flex-row flex-wrap justify-center lg:justify-between w-full gap-2">
+						{projects[4].data.skills.map(skill => (
+							<SkillItem skill={skill} t={t} mode="h-no-label"/>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class="absolute inset-px rounded-lg ring-1 shadow-sm ring-black/5 max-md:rounded-b-[2rem] xl:rounded-br-[2rem] bg-neutral-50 dark:bg-neutral-700"></div>
+		</div>
+	</div>
+</section>

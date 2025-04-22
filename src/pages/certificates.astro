@@ -1,0 +1,15 @@
+---
+import Formation from '@components/sections/Formation.astro';
+import Layout from '@layouts/Layout.astro';
+
+import { loadLocale } from '@utils/i18n.js';
+const currentLocale  = Astro.currentLocale;
+const t = await loadLocale(currentLocale);
+
+---
+
+<Layout currentLocale={currentLocale} t={t}>
+	<main>
+		<Formation t={t}/>
+	</main>
+</Layout>

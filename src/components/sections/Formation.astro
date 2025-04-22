@@ -1,0 +1,205 @@
+---
+import { getCollection } from 'astro:content';
+import DegreeItem from "@components/elements/DegreeItem.astro";
+import CertificateItem from "@components/elements/CertificateItem.astro";
+import ChevronIcon from "@components/icons/Chevron.astro";
+import PlayIcon from "@components/icons/Play.astro";
+import StopIcon from "@components/icons/Stop.astro";
+
+const { t } = Astro.props;
+const currentLocale = Astro.currentLocale;
+
+const DEGREES = await getCollection('degrees');
+const CERTIFICATES = await getCollection('certificates');
+const degrees = DEGREES.filter(degree => degree.id.includes(currentLocale));
+const certificates = CERTIFICATES.filter(certificate => certificate.id.includes(currentLocale));
+---
+
+<section id="formation-section" class="max-w-[80%] 2xl:max-w-6xl mx-auto py-12 flex flex-col justify-center items-center gap-6 dark:bg-neutral-800 relative">
+    <a id="formation" class="absolute -top-32"></a>
+	<header class="flex flex-col items-center justify-center w-full">
+        <h1 class ="font-extrabold text-5xl cursor-default py-2">{t.globals.formationTitle}</h1>
+		<h2 class ="leading-8 tracking-wide font-light text-primary dark:text-accent text-2xl text-center mt-6">
+			<em>"{t.globals.formationDescription}"</em>
+		</h2>
+    </header>
+	<article class="w-full border border-black/5 bg-neutral-50 dark:bg-neutral-700 rounded-3xl text-center">
+		<div class="px-10 pt-10">
+			<h1 class="mt-2 text-xl font-extrabold tracking-widest max-lg:text-center text-secondary uppercase">{t.globals.degreesTitle}</h1>
+			<ul class="flex flex-col lg:grid lg:grid-cols-3 justify-items items-center gap-8 mt-4" >
+				{ degrees.map(degree => (
+					<DegreeItem degree={degree}/>
+				))}
+			</ul>
+		</div>
+		<div class="w-full px-6 pt-10">
+			<div class="flex justify-between items-center gap-2 px-4">
+				<hr class="grow-2 h-1 my-8 bg-neutral-200 border-0 rounded-sm dark:bg-neutral-700">
+				<h1 class="text-xl font-extrabold tracking-widest max-lg:text-center text-secondary uppercase">{t.globals.certificatesTitle}</h1>
+				<hr class="grow-2 h-1 my-8 bg-neutral-200 border-0 rounded-sm dark:bg-neutral-700">
+			</div>
+			<div class="flex flex-row items-center justify-between gap-2">
+				<div class="rotate-90">
+					<ChevronIcon data-direction="left" class="size-10 arrow-scroll hover:stroke-primary hover:fill-primary cursor-pointer"/>
+				</div>
+				<div class="certificate-list flex flex-col overflow-hidden">
+					<div class="loop-slider" data-duration="slow" data-direction="right">
+						<ul class="inner flex w-fit gap-6 p-4">
+							{ certificates.map(certificate => (
+								<CertificateItem certificate={certificate} t={t}/>
+							))}
+						</ul>
+					</div>
+				</div>
+				<div class="-rotate-90">
+					<ChevronIcon data-direction="right" class="size-10 arrow-scroll hover:stroke-primary hover:fill-primary cursor-pointer"/>
+				</div>
+			</div>
+			<div class="flex justify-center items-center gap-2 my-6 fill-neutral-300 dark:fill-white">
+				<PlayIcon class="play-scroll size-8 hover:fill-primary dark:hover:fill-accent cursor-pointer" title={t.globals.playAnimation}/>
+				<StopIcon class="stop-scroll size-8 hover:fill-primary dark:hover:fill-accent cursor-pointer" title={t.globals.stopAnimation}/>
+			</div>
+		</div>
+	</article>
+</section>
+<style>
+
+	@reference "@styles/global.css";
+	.certificate-list{
+		-webkit-mask:linear-gradient(90deg, transparent, white 2%, white 98%, transparent);
+		mask:linear-gradient(90deg, transparent, white 2%, white 98%, transparent);
+	}
+
+	.loop-slider .inner {
+		animation-name: loop;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+
+	.loop-slider[data-direction="left"] .inner {
+		animation-direction:reverse;
+	}
+
+	.loop-slider[data-direction="right"] .inner {
+		animation-direction:normal;
+	}
+
+	.loop-slider[data-duration="slow"] .inner {
+		animation-duration: 15s;
+	}
+
+	.loop-slider[data-duration="faster"] .inner {
+		animation-duration: 3s;
+	}
+
+	.loop-slider[data-play-state="running"] .inner {
+		animation-play-state: running;
+	}
+
+	.loop-slider[data-play-state="paused"] .inner,
+	.loop-slider .inner:hover {
+		animation-play-state: paused;
+	}
+
+	@keyframes loop{
+		0%{
+			transform:translate(0);
+		}
+        100%{
+			transform:translate(calc(-50% + 0.5rem));
+        }
+    }
+
+</style>
+<script>
+
+	const scrollers = document.querySelectorAll('.loop-slider');
+	const playIcon = document.querySelector('.play-scroll');
+	const stopIcon = document.querySelector('.stop-scroll');
+	const arrows = document.querySelectorAll('.arrow-scroll');
+
+	duplicateItems();
+	if(!window.matchMedia('(prefers-reduced-motion: true)').matches){
+		toogleAnimation("running");
+	}else{
+		toogleAnimation("paused");
+	}
+
+	playIcon.addEventListener('click', () => {
+		toogleAnimation("running", "slow", "right");
+	});
+
+	stopIcon.addEventListener('click', () => {
+		toogleAnimation("paused");
+	});
+
+	arrows.forEach(arrow => {
+		arrow.addEventListener('mousedown', (e) => {
+			const direction = arrow.getAttribute('data-direction');
+			animateCarrousel(direction);
+		});
+	});
+
+	function duplicateItems(){
+		scrollers.forEach(scroller => {
+			const scrollerInner  = scroller.querySelector('.inner');
+			const scrollerContent = Array.from(scrollerInner.children);
+
+
+			scrollerContent.forEach(item => {
+				const duplicatedItem =  item.cloneNode(true);
+				duplicatedItem.setAttribute("aria-hidden", true);
+				scrollerInner.appendChild(duplicatedItem);
+			});
+		});
+	}
+
+	function toogleAnimation(state, speed, direction){
+		scrollers.forEach(scroller => {
+			if(!speed){
+				speed = scroller.getAttribute('data-duration');
+			}
+			if(!direction){
+				direction = scroller.getAttribute('data-direction');
+			}
+			scroller.setAttribute('data-play-state', state);
+			scroller.setAttribute('data-duration', speed);
+			scroller.setAttribute('data-direction', direction);
+		});
+		if(state === "running"){
+			playIcon.classList.add('fill-primary');
+			stopIcon.classList.remove('fill-primary');
+			playIcon.classList.add('dark:fill-accent');
+			stopIcon.classList.remove('dark:fill-accent');
+			arrows.forEach(arrow => {
+				arrow.classList.add('stroke-neutral-50');
+				arrow.classList.remove('stroke-neutral-300');
+				arrow.classList.remove('fill-neutral-300');
+				arrow.classList.add('dark:stroke-neutral-700');
+				arrow.classList.remove('dark:fill-white');
+			});
+		}else{
+			playIcon.classList.remove('fill-primary');
+			stopIcon.classList.add('fill-primary');
+			playIcon.classList.remove('dark:fill-accent');
+			stopIcon.classList.add('dark:fill-accent');
+			arrows.forEach(arrow => {
+				arrow.classList.remove('stroke-neutral-50');
+				arrow.classList.add('stroke-neutral-300');
+				arrow.classList.add('fill-neutral-300');
+				arrow.classList.remove('dark:stroke-neutral-700');
+				arrow.classList.add('dark:fill-white');
+			});
+		}
+	}
+
+	function animateCarrousel(direction){
+		scrollers.forEach(scroller => {
+			toogleAnimation("running", "faster", direction);
+			setTimeout(() => {
+				toogleAnimation("paused");
+			}, 500);
+		});
+	}
+
+</script>

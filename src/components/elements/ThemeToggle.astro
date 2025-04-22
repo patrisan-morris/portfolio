@@ -1,0 +1,40 @@
+---
+import MoonIcon from '@components/icons/Moon.astro';
+import SunIcon from '@components/icons/Sun.astro';
+const {t} = Astro.props;
+---
+
+<div id="theme-toggle-wrapper" class="flex items-center justify-center">
+    <div id="theme-toggle" class="flex justify-center items-center hover:text-primary  hover:dark:text-accent dark:border-accent rounded-full py-[2.5px] px-2 cursor-pointer transition">
+        <input type="checkbox" class="hidden" id="chk">
+        <label id="theme-toggle-label" for="chk" class="flex justify-center items-center cursor-pointer h-[25px] rounded-[50px] relative">
+            <span class="sr-only">{t.globals.themeSrOnly}</span>
+            <MoonIcon id="dark" class="icon size-6 dark:hidden" title={t.globals.darkMode}/>
+            <SunIcon id="light" class="icon size-6 hidden dark:block" title={t.globals.lightMode}/>
+        </label>
+    </div>
+</div>
+<style>
+	@reference "@styles/global.css";
+    #theme-toggle:hover .icon{
+        @apply scale-[1.2] fill-accent;
+    }
+    #theme-toggle:hover .icon#dark{
+        @apply fill-primary;
+    }
+</style>
+<script is:inline>
+    const matchMedia = window.matchMedia('(prefers-color-scheme: light)');
+    const themeToggle = document.getElementById('chk');
+
+    document.documentElement.setAttribute("data-theme", matchMedia.matches?"light":"dark");
+
+
+    themeToggle.addEventListener('change', () => {
+        if(document.documentElement.getAttribute("data-theme") === "light"){
+            document.documentElement.setAttribute("data-theme","dark");
+        }else{
+            document.documentElement.setAttribute("data-theme","light");
+        }
+    });
+</script>

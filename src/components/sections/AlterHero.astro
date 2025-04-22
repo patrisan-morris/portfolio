@@ -1,0 +1,115 @@
+---
+import HeartIcon from '@components/icons/Heart.astro';
+import EmailIcon from '@components/icons/Email.astro';
+const {t} = Astro.props;
+
+const ALTERHEROS = [
+	{hero: 'dev', title: t.globals.devTitle, subtitle: t.globals.devSubtitle , description: t.globals.devDescription, image: '/pma-dev.png', bg: 'bg-pma-dev', likes: "1500"},
+	{hero: 'dancer', title: t.globals.dancerTitle, subtitle: t.globals.dancerSubtitle , description: t.globals.dancerDescription, image: '/pma-dancer.png', bg: 'bg-pma-dancer', likes: "1260"},
+	{hero: 'gamer', title: t.globals.gamerTitle, subtitle: t.globals.gamerSubtitle , description: t.globals.gamerDescription, image: '/pma-gamer.png', bg: 'bg-pma-gamer', likes: "1340"},
+	{hero: 'traveler', title: t.globals.travelerTitle, subtitle: t.globals.travelerSubtitle , description: t.globals.travelerDescription, image: '/pma-traveler.png', bg: 'bg-pma-traveler', likes: "2600"},
+	{hero: 'catlover', title: t.globals.catloverTitle, subtitle: t.globals.catloverSubtitle , description: t.globals.catloverDescription, image: '/pma-catlover.png', bg: 'bg-pma-catlover', likes: "99999+"},
+	{hero: 'reader', title: t.globals.readerTitle, subtitle: t.globals.readerSubtitle , description: t.globals.readerDescription, image: '/pma-reader.png', bg: 'bg-pma-reader', likes: "50"}
+];
+
+const currentHero = 'dev';
+---
+
+<section id="alterhero" class="relative -top-20 w-full" data-currenthero={currentHero}>
+
+	{ALTERHEROS.map((alterhero, index) => (
+		<div class={alterhero.bg +" fondo min-h-6xl dark:bg-neutral-800 bg-white/95 bg-blend-overlay dark:bg-blend-multiply bg-contain bg-no-repeat bg-center"}>
+			<div data-hero={alterhero.hero} class="hero-section max-w-7xl mx-auto justify-center items-center hidden">
+				<div class="flex justify-between items-center mt-32 mb-72 gap-16 w-full">
+					<div class="flex flex-col justify-start items-start cursor-default max-w-2/4 gap-3">
+						<div class="flex flex-col justify-center items-end">
+							<h1 id="name" class="text-6xl font-bold border-b-4 border-neutral-600 dark:border-white py-2">{t.globals.name}</h1>
+							<h2 class="text-2xl uppercase font-bold py-2 tracking-widest bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{alterhero.title}</h2>
+						</div>
+						<p class="text-md text-neutral-500 font-light tracking-wide leading-8">{alterhero.description}</p>
+					</div>
+					<div class="max-w-full sm:max-w-1/4 rotate-6 px-5 pt-5 pb-5 bg-white border-4 border-primary shadow-neutral-400 dark:shadow-neutral-900 shadow-xl">
+						<img src={alterhero.image} alt={alterhero.title} class="w-full mb-2"/>
+						<footer class="flex flex-col justify-center items-center">
+							<ul class="flex flex-row justify-center items-center w-full gap-3 list-disc cursor-pointer">
+								{ALTERHEROS.filter(alterelem => alterelem.hero !== alterhero.hero).map(alterelem => (
+									<li data-hero={alterelem.hero} class="text-neutral-200 hover:text-primary text-"></li>
+								))}
+							</ul>
+							<div class="flex flex-row w-full justify-between">
+								<div class="flex flex-row justify-center items-center gap-2">
+									<HeartIcon class="size-6 cursor-pointer hover:fill-primary"/>
+									<span>{alterhero.likes}</span>
+									<span>{t.globals.likes}</span>
+								</div>
+								<div>
+									<EmailIcon class="fill-white stroke-neutral-800 size-6 cursor-pointer hover:stroke-primary"/>
+								</div>
+							</div>
+						</footer>
+					</div>
+				</div>
+			</div>
+		</div>
+	))}
+	<div class="absolute bottom-0 w-full">
+		<div class="max-w-7xl mx-auto flex flex-col justify-center items-center">
+			<h1 class ="font-extrabold text-3xl cursor-default py-2">{t.globals.alterQuestion}</h1>
+			<h2 class ="text-xl uppercase font-bold py-2 tracking-widest text-primary">{t.globals.alterTitle}</h2>
+			<ul class="flex flex-row justify-around items-center mt-3">
+				{ALTERHEROS.map((alterhero) => (
+					<li data-hero={alterhero.hero} class="button-alter w-1/8 flex flex-col justify-center items-center cursor-pointer transition hover:scale-105 hover:text-primary">
+						<img src={alterhero.image} alt={alterhero.title} class="img-hero w-1/2 p-2 rounded-full"/>
+						<h3>{alterhero.subtitle}</h3>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+</section>
+
+<style is:inline>
+	.fondo{
+		mask-image: linear-gradient(#fff 90%, transparent);
+	}
+	.img-hero{
+		mask-image: radial-gradient(circle at center in hsl shorter hue, #FFF 40%, #FFFFFF33 55%, transparent 60%);
+	}
+</style>
+
+<script is:inline>
+	let currentHero = document.getElementById("alterhero");
+	const buttonsAlter = document.getElementsByClassName('button-alter');
+	const elements = document.getElementsByClassName("hero-section");
+
+	function change(hero) {
+		Array.prototype.forEach.call(elements, element => {
+			if(element.dataset.hero !== hero){
+				element.classList.add('hidden');
+				element.classList.remove('flex');
+			}else{
+				element.classList.remove('hidden');
+				element.classList.add('flex');
+			}
+		});
+		Array.prototype.forEach.call(buttonsAlter, button => {
+			if(button.dataset.hero === hero){
+				button.classList.add('hidden');
+				button.classList.remove('flex');
+			}else{
+				button.classList.remove('hidden');
+				button.classList.add('flex');
+			}
+		});
+
+		currentHero.dataset.currenthero = hero;
+	}
+
+	change(currentHero.dataset.currenthero);
+
+	Array.prototype.forEach.call(buttonsAlter, (button) => {
+		button.addEventListener('click', (e) => {
+			change(button.dataset.hero);
+		});
+	});
+</script>

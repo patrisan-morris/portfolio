@@ -1,0 +1,30 @@
+---
+import HeartIcon from "@components/icons/Heart.astro";
+import ArrowIcon from "@components/icons/Arrow.astro";
+const {t} = Astro.props;
+const year = new Date();
+---
+
+<section class="dark:bg-neutral-900 bg-neutral-800 w-full flex justify-center">
+	<div class="flex justify-center w-[85%] relative my-6 md:my-0 lg:w-[90%] xl:w-6xl">
+		<div class="flex justify-center items-center gap-2 text-white py-6 text-md tracking-widest uppercase font-light">
+			<time>{year.getFullYear()}</time>
+			<HeartIcon class="fill-primary dark:fill-accent"/>
+			<span>{t.globals.name  + " " + t.globals.surname1 + " " + t.globals.surname2}</span>
+		</div>
+		<div id="backtotop" class="absolute mx-auto -top-12 xs:left-0 right-0 md:-top-6 p-2 border-2 size-12 overflow-hidden border-white bg-primary dark:bg-accent rounded-full cursor-pointer hover:scale-140 transition" aria-hidden="true">
+			<div class="flex flex-col justify-center items-center hover:-translate-y-10 transition duration-300"">
+				<ArrowIcon class="stroke-neutral-800 size-8" title={t.globals.backTo}/>
+				<span class="text-[10px] uppercase font-bold pt-4 dark:text-neutral-800">{t.globals.home}</span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const backToTop = document.getElementById('backtotop');
+	backToTop.addEventListener("click", (e) => {
+		const alterhero = document.getElementById('alterhero');
+		alterhero.scrollIntoView({behavior: "smooth", block:"start", inline: "nearest"});
+	});
+</script>

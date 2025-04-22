@@ -1,0 +1,77 @@
+---
+import World from '@components/icons/World.astro';
+const currentLocale = Astro.currentLocale;
+const {t} = Astro.props;
+const languages = [
+	{value: 'es', shortLabel: 'ES', label:t.globals.langEs},
+	{value: 'en', shortLabel: 'EN', label:t.globals.langEn},
+];
+---
+<div class="flex flex-col md:flex-row items-start justify-start">
+
+    <button id="button-languages" type="button" class="flex items-center justify-center z-20 px-4 py-1 cursor-pointer transition hover:text-primary hover:font-semibold hover:scale-110 hover:fill-primary dark:fill-white dark:hover:text-accent dark:hover:fill-accent" title={t.globals.changeLanguage}>
+        <World class="size-6"/>
+        <span class="uppercase font-medium w-[24px]">{currentLocale}</span>
+    </button>
+    <div id="dropdown-languages" class="hidden absolute top-9 left-0 right-0 mx-auto w-max text-center duration-300">
+        <ul class="flex flex-row justify-center items-center gap-2 p-1 bg-neutral-50 dark:bg-neutral-700 rounded-b-md border-t border-neutral-200 dark:border-neutral-800">
+            {
+                languages.filter(lang => lang.value !== currentLocale).map( lang => (
+                <li class="lang-option hover:text-primary dark:hover:text-accent hover:font-semibold cursor-pointer px-2" value={lang.value}>
+                    {lang.shortLabel}
+                </li>
+            ))}
+        </ul>
+    </div>
+</div>
+
+<style>
+    #dropdown-languages.open {
+        @apply block;
+        animation:scale-up-center 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+    #dropdown-languages ul{
+        --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+		box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+
+    @keyframes scale-up-center {
+        0% {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+</style>
+
+<script is:inline>
+
+    const dropdown = document.getElementById('dropdown-languages');
+    const button = document.getElementById('button-languages');
+    const currentlang = button.innerText.toLocaleLowerCase();
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+    });
+
+    // Toggle dropdown when clicking on button
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpened = dropdown.classList.contains('open');
+        dropdown.classList.toggle('open', !isOpened);
+    });
+
+    // Change language when clicking on option
+    dropdown.addEventListener('click', (e) => {
+        const lang = e.target.getAttribute('value');
+        if (lang && lang !== currentlang) {
+            (lang === "es")? window.location.href = `/`: window.location.href = `/${lang}/`;
+        }
+    });
+
+</script>

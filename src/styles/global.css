@@ -1,1 +1,120 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+:root {
+    --primary: 250 182 49; /* Naranja #FAB631 */
+    --secondary:32 132 32; /*Verde #208420 */
+    --terciary:45 112 179; /*Azul #2d70b3 */
+    --accent: 254 218 94; /*Amarillo #FEDA5E */
+    --contrast: 224 22 93 /*Fucsia #e0165d */
+}
+::selection {
+	background: rgba(var(--accent) / 0.2);
+}
+
+::-moz-selection {
+	background: rgba(var(--accent) / 0.2);
+}
+
+::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+	border-radius: 50px;
+}
+
+::-webkit-scrollbar{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb{
+	border-radius: 20px;
+	background-color: #FFF;
+	/*background:rgb(var(--primary));*/
+    background-image:-webkit-linear-gradient(#FAB631, #FEDA5E);
+}
+
+@theme {
+    --color-primary: rgb(var(--primary));
+    --color-accent: rgb(var(--accent));
+    --color-secondary: rgb(var(--secondary));
+    --color-contrast: rgb(var(--contrast));
+
+    --color-html:#E45A2A;
+    --color-css: #1771B5;
+    --color-tailwindcss: #36B6F2;
+    --color-bootstrap: #8712F7;
+    --color-js: #EFD81D;
+    --color-astro:  #FF5D01;
+    --color-jquery:  #78CFF5;
+    --color-php:  #4F5B93;
+    --color-laravel:  #F2231A;
+    --color-codeigniter:  #F73700;
+    --color-wordpress:  #207196;
+    --color-moodle:  #F89D31!important;
+    --color-node:  #7EC729;
+    --color-mysql:  #015D85;
+    --color-oracle:  #F10101;
+    --color-git:  #E84D31;
+    --color-docker:  #2391E6;
+    --color-kubernetes:  #306ADF;
+    --color-indesign:  #FF3366;
+    --color-photo:  #31A8FF;
+    --color-unity: rgb(var(--primary));
+    --color-studiomax:  #099C9C;
+    --color-helm:  #091C84;
+    --color-traefik:  #24A1C1;
+    --color-github:  #060842;
+    --color-confluence:  #1975F5;
+    --color-csharp:  #9B4F96;
+    --color-linkedin:  #0A66C2;
+    --color-aveva:  #3D1152;
+    --color-cv: rgb(var(--secondary));
+    --color-email: rgb(var(--primary));
+
+    --color-vue-0:  #41B883;
+	--color-vue-1:  #41B883;
+	--color-vue-2:  #35495E;
+
+    --color-figma-0:  #0ACF83;
+    --color-figma-1:  #A259FF;
+    --color-figma-2:  #F24E1E;
+    --color-figma-3:  #FF7262;
+    --color-figma-4:  #1ABCFE;
+
+    --color-argocd-0:  #FBDFC3;
+    --color-argocd-1:  #E34E3B;
+    --color-argocd-2:  #E9654B;
+    --color-argocd-3:  #E9654B;
+    --color-argocd-4:  #B6CFEA;
+    --color-argocd-5:  #E6F5F8;
+    --color-argocd-6:  #D0E8F0;
+    --color-argocd-7:  #EE794B;
+    --color-argocd-8:  #EE794B;
+    --color-argocd-9:  #EE794B;
+    --color-argocd-10:  #E9654B;
+    --color-argocd-11:  #B6CFEA;
+    --color-argocd-12:  #FFFFFF;
+
+    --color-vmware-0:  #FB8C00;
+    --color-vmware-1:  #64B5F6;
+
+    --color-aws-0:  #252F3E;
+    --color-aws-1:  #FF9900;
+
+    --color-project1:  rgb(var(--terciary));/*#2C5884;*/
+    --color-project2:  rgb(var(--accent)); /*#7234B1;*/
+    --color-project3:  rgb(var(--contrast));/*#A40E65;*/
+    --color-project4:  rgb(var(--secondary));
+    --color-project5: rgb(var(--primary));
+
+	--font-montserrat: 'Montserrat';
+	--font-merriweather: 'Merriweather Sans';
+
+	--bg-image-pma-dev: url(/developer.png);
+	--bg-image-pma-dancer: url(/pma-dancer.png);
+	--bg-image-pma-gamer: url(/pma-gamer.png);
+	--bg-image-pma-traveler: url(/pma-traveler.png);
+	--bg-image-pma-catlover: url(/pma-catlover.png);
+	--bg-image-pma-reader: url(/pma-reader.png);
+
+}

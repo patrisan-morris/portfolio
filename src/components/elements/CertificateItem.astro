@@ -1,0 +1,49 @@
+---
+import Modal from "@components/elements/Modal.astro";
+import { render } from "astro:content";
+const { certificate } = Astro.props;
+const { Content } = await render(certificate);
+const data = certificate.data;
+---
+<li class="certificate-li text-center w-3xs inline gap-4" data-id={data.id}>
+    <div class="group shield-shape w-full overflow-hidden  min-h-60 border-8 border-double bg-white border-neutral-300 dark:border-neutral-800 shadow-neutral-300 dark:shadow-neutral-800 hover:border-primary flex flex-col justify-start h-[88%] cursor-pointer hover:scale-105 transition">
+        <header class="h-16 z-0">
+            <img src={data.img} class={"mx-auto relative " + data.class} alt={data.name}/>
+        </header>
+        <div class="sign-board z-10 h-26 px-8 bg-neutral-300 dark:bg-neutral-500 text-center flex items-center group-hover:bg-primary/30 dark:group-hover:bg-primary/70">
+            <h2 class="uppercase font-semibold text-sm line-clamp-4 dark:group-hover:text-neutral-800">{data.title}</h2>
+        </div>
+        <footer class="py-2">
+            <p class="text-sm font-light tracking-widest leading-8 dark:text-neutral-800">{data.duration}</p>
+        </footer>
+    </div>
+</li>
+<Modal id={data.id} >
+    <img slot="img" src={data.img} alt={data.name} class={data.classModal + " mx-auto absolute -top-10 left-0 right-0"}/>
+    <header slot="title">{data.title}</header>
+    <header slot="type">Certificado</header>
+    <main slot="certifiedBy">
+        <h1>{data.certifiedBy}</h1>
+    </main>
+    <main slot='main'>
+        <Content/>
+    </main>
+    <button slot="close">Cerrar ventana</button>
+</Modal>
+
+<style>
+    @reference "@styles/global.css";
+    .shield-shape{
+        border-radius:50% 50% 50% 50% / 12% 12% 88% 88%;
+    }
+</style>
+
+<script>
+    const buttons =  document.getElementsByClassName("certificate-li");
+    Array.prototype.forEach.call(buttons, button => {
+        button.addEventListener("click", (e) => {
+            const dialog = document.getElementById(button.getAttribute("data-id"));
+            dialog.showModal();
+        });
+    });
+</script>

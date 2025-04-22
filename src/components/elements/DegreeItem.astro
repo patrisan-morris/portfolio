@@ -1,0 +1,42 @@
+---
+import Modal from "@components/elements/Modal.astro";
+import { render } from "astro:content";
+const { degree } = Astro.props;
+const { Content } = await render(degree);
+const data = degree.data;
+---
+<li data-id={data.id} class="degree-item relative text-center border-6 border-neutral-300 dark:border-neutral-800 hover:border-primary shadow-neutral-300 dark:shadow-neutral-800 shadow-lg bg-white rounded-sm border-double p-2 w-[90%] sm:w-[85%] md:max-w-lg lg:w-full flex flex-col justify-between min-h-48 md:min-h-58 cursor-pointer hover:scale-105 transition">
+    <header class="overflow-hidden h-18 md:h-24 lg:h-14">
+        <img src={data.img} class={"mx-auto relative " + data.class} alt={data.name}/>
+    </header>
+    <div class="">
+        <h4 class="text-neutral-500 tracking-wide text-md">{data.subtitle}</h4>
+        <h2 class="uppercase font-semibold text-md sm:text-lg dark:text-neutral-800">{data.title}</h2>
+    </div>
+    <footer class="">
+        <p class="text-sm text-neutral-600 font-light tracking-widest leading-8 relative bottom-2">{data.date}</p>
+    </footer>
+</li>
+<Modal id={data.id}>
+    <img slot="img" src={data.img} alt={data.name} class="h-42 max-w-1/4 mx-auto absolute -top-10 left-0 right-0"/>
+    <div slot="title">{data.title}</div>
+    <div slot="type">Título</div>
+    <div slot="subtitle">{data.subtitle}</div>
+    <main slot="certifiedBy">
+        <h1>{data.certifiedBy}</h1>
+    </main>
+    <main slot='main'>
+        <Content/>
+    </main>
+    <button slot="close">Cerrar ventana</button>
+</Modal>
+
+<script>
+    const buttons =  document.getElementsByClassName("degree-item");
+    Array.prototype.forEach.call(buttons, button => {
+        button.addEventListener("click", (e) => {
+            const dialog = document.getElementById(button.getAttribute("data-id"));
+            dialog.showModal();
+        });
+    });
+</script>

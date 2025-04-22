@@ -1,0 +1,30 @@
+---
+import Hero from '@components/sections/Hero.astro';
+import Formation from '@components/sections/Formation.astro';
+import Contact from '@components/sections/Contact.astro';
+import Projects from '@components/sections/Projects.astro';
+import Skills from '@components/sections/Skills.astro';
+import Works from '@components/sections/Works.astro';
+
+import Layout from '@layouts/Layout.astro';
+
+import { loadLocale } from '@utils/i18n.js';
+const currentLocale  = Astro.currentLocale;
+const t = await loadLocale(currentLocale);
+
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout currentLocale={currentLocale} t={t}>
+	<main>
+		<Hero t={t}/>
+		<Works t={t}/>
+		<Projects t={t}/>
+		<Formation t={t}/>
+		<Skills t={t}/>
+		<Contact t={t}/>
+	</main>
+</Layout>
+

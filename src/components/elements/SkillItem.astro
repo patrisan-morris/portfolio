@@ -1,0 +1,159 @@
+---
+const {skill, t, mode, link, target, withlabelxs} = Astro.props;
+
+import HtmlIcon from '@components/icons/brands/Html.astro';
+import CssIcon from '@components/icons/brands/Css.astro';
+import TailwindIcon from '@components/icons/brands/Tailwind.astro';
+import BootstrapIcon from '@components/icons/brands/Bootstrap.astro';
+import JavaScriptIcon from '@components/icons/brands/JavaScript.astro';
+import VueIcon from '@components/icons/brands/Vue.astro';
+import AstroIcon from '@components/icons/brands/AstroIcon.astro';
+import JQueryIcon from '@components/icons/brands/JQuery.astro';
+import PhpIcon from '@components/icons/brands/Php.astro';
+import LaravelIcon from '@components/icons/brands/Laravel.astro';
+import CodeIgniterIcon from '@components/icons/brands/CodeIgniter.astro';
+import WordpressIcon from '@components/icons/brands/Wordpress.astro';
+import MoodleIcon from '@components/icons/brands/Moodle.astro';
+import NodeIcon from '@components/icons/brands/Node.astro';
+import MySQLIcon from '@components/icons/brands/MySQL.astro';
+import OracleIcon from '@components/icons/brands/Oracle.astro';
+import GitIcon from '@components/icons/brands/Git.astro';
+import DockerIcon from '@components/icons/brands/Docker.astro';
+import KubernetesIcon from '@components/icons/brands/Kubernetes.astro';
+import FigmaIcon from '@components/icons/brands/Figma.astro';
+import InDesignIcon from '@components/icons/brands/InDesign.astro';
+import PhotoshopIcon from '@components/icons/brands/Photoshop.astro';
+import UnityIcon from '@components/icons/brands/Unity.astro';
+import StudioMaxIcon from '@components/icons/brands/StudioMax.astro';
+import HelmIcon from '@components/icons/brands/Helm.astro';
+import ArgoCdIcon from '@components/icons/brands/ArgoCd.astro';
+import TraefikIcon from '@components/icons/brands/Traefik.astro';
+import GithubIcon from '@components/icons/brands/Github.astro';
+import ConfluenceIcon from '@components/icons/brands/Confluence.astro';
+import VMwareIcon from '@components/icons/brands/VMware.astro';
+import AvevaIcon from '@components/icons/brands/Aveva.astro';
+import AwsIcon from '@components/icons/brands/Aws.astro';
+import CSharpIcon from '@components/icons/brands/CSharp.astro';
+import LinkedinIcon from '@components/icons/brands/Linkedin.astro';
+import EmailIcon from '@components/icons/Email.astro';
+import CVIcon from '@components/icons/CV.astro';
+
+const IconsMap = [
+    {name: 'html', icon: HtmlIcon, label: t.skills.html, class: "hover:fill-html dark:hover:fill-html hover:text-html hover:border-html", remove: ""},
+    {name: 'css', icon: CssIcon, label: t.skills.css, class: "hover:fill-css dark:hover:fill-css hover:text-css hover:border-css", remove: ""},
+    {name: 'tailwindcss', icon: TailwindIcon, label: t.skills.tailwindcss, class: "hover:fill-tailwindcss dark:hover:fill-tailwindcss hover:text-tailwindcss hover:border-tailwindcss", remove: ""},
+    {name: 'bootstrap', icon: BootstrapIcon, label: t.skills.bootstrap, class: "hover:fill-bootstrap dark:hover:fill-bootstrap hover:text-bootstrap hover:border-bootstrap", remove: ""},
+    {name: 'js', icon: JavaScriptIcon, label: t.skills.js, class: "hover:fill-js dark:hover:fill-js hover:text-js hover:border-js", remove: ""},
+    {name: 'vue', icon: VueIcon, label: t.skills.vue, class:"hover:fill-vue dark:hover:fill-vue hover:text-vue-0 hover:border-vue-0", remove: ["fill-[#999]", "fill-[#999]", "fill-[#333]"]},
+    {name: 'astro', icon: AstroIcon, label: t.skills.astro, class:"hover:fill-astro hover:text-astro hover:border-astro", remove: "fill-[#666]"},
+    {name: 'jquery', icon: JQueryIcon, label: t.skills.jquery, class: "hover:fill-jquery dark:hover:fill-jquery hover:text-jquery hover:border-jquery", remove: ""},
+    {name: 'php', icon: PhpIcon, label: t.skills.php, class: "hover:fill-php dark:hover:fill-php hover:text-php hover:border-php", remove: ""},
+    {name: 'laravel', icon: LaravelIcon, label: t.skills.laravel, class: "hover:fill-laravel dark:hover:fill-laravel hover:text-laravel hover:border-laravel", remove: ""},
+    {name: 'codeigniter', icon: CodeIgniterIcon, label: t.skills.codeigniter, class: "hover:fill-codeigniter dark:hover:fill-codeigniter hover:text-codeigniter hover:border-codeigniter", remove: ""},
+    {name: 'wordpress', icon: WordpressIcon, label: t.skills.wordpress, class: "hover:fill-wordpress dark:hover:fill-wordpress hover:text-wordpress hover:border-wordpress", remove: ""},
+    {name: 'moodle', icon: MoodleIcon, label: t.skills.moodle, class: "moodle hover:text-moodle hover:border-moodle dark:hover:text-moodle", remove: "fill-[#333] dark:fill-white"},
+    {name: 'node', icon: NodeIcon, label: t.skills.node, class: "hover:fill-node dark:hover:fill-node hover:text-node hover:border-node", remove: ""},
+    {name: 'mysql', icon: MySQLIcon, label: t.skills.mysql, class: "hover:fill-mysql dark:hover:fill-mysql hover:text-mysql hover:border-mysql", remove: ""},
+    {name: 'oracle', icon: OracleIcon, label: t.skills.oracle, class: "hover:fill-oracle dark:hover:fill-oracle hover:text-oracle hover:border-oracle", remove: ""},
+    {name: 'git', icon: GitIcon, label: t.skills.git, class: "hover:fill-git dark:hover:fill-git hover:text-git hover:border-git", remove: ""},
+    {name: 'docker', icon: DockerIcon, label: t.skills.docker, class: "hover:fill-docker dark:hover:fill-docker hover:text-docker hover:border-docker", remove: ""},
+    {name: 'kubernetes', icon: KubernetesIcon, label: t.skills.kubernetes, class: "hover:fill-kubernetes dark:hover:fill-kubernetes hover:text-kubernetes hover:border-kubernetes", remove: ""},
+    {name: 'figma', icon: FigmaIcon, label: t.skills.figma, class: "hover:text-figma-2 hover:border-figma-2", remove: ["fill-neutral-800"]},
+    {name: 'indesign', icon: InDesignIcon, label: t.skills.indesign, class: "fill-white hover:fill-indesign dark:hover:fill-indesign hover:text-indesign hover:border-indesign", remove: ""},
+    {name: 'photoshop', icon: PhotoshopIcon, label: t.skills.photoshop, class: "fill-white hover:fill-photo dark:hover:fill-photo hover:text-photo hover:border-photo", remove: ""},
+    {name: 'unity', icon: UnityIcon, label: t.skills.unity, class: "hover:fill-unity dark:hover:fill-unity hover:text-unity hover:border-unity", remove: ""},
+    {name: 'studiomax', icon: StudioMaxIcon, label: t.skills.studiomax, class: "hover:fill-studiomax dark:hover:fill-studiomax hover:text-studiomax hover:border-studiomax", remove: ""},
+    {name: 'helm', icon: HelmIcon, label: t.skills.helm, class: "hover:fill-helm dark:hover:fill-helm hover:text-helm hover:border-helm", remove: ""},
+    {name: 'argocd', icon: ArgoCdIcon, label: t.skills.argocd, class: "hover:text-argocd-1 hover:border-argocd-1", remove: ["fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-300", "fill-neutral-300", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800", "fill-neutral-800"]},
+    {name: 'traefik', icon: TraefikIcon, label: t.skills.traefik, class: "hover:fill-traefik dark:hover:fill-traefik hover:text-traefik hover:border-traefik", remove: ""},
+    {name: 'github', icon: GithubIcon, label: t.skills.github, class: "hover:fill-github dark:hover:fill-github hover:text-github hover:border-github", remove: ""},
+    {name: 'confluence', icon: ConfluenceIcon, label: t.skills.confluence, class: "hover:fill-confluence dark:hover:fill-confluence hover:text-confluence hover:border-confluence", remove: ""},
+    {name: 'vmware', icon: VMwareIcon, label: t.skills.vmware, class: "hover:fill-vmware-1 dark:hover:fill-vmware-1 hover:text-vmware-1 hover:border-vmware-1", remove: ["fill-[#999]", "fill-[#666]"]},
+    {name: 'aveva', icon: AvevaIcon, label: t.skills.aveva, class: "hover:fill-aveva dark:hover:fill-aveva hover:text-aveva hover:border-aveva", remove: ""},
+    {name: 'aws', icon: AwsIcon, label: t.skills.aws, class: "hover:fill-aws-1 dark:hover:fill-aws-1 hover:text-aws-1 hover:border-aws-1", remove: ""},
+    {name: 'csharp', icon: CSharpIcon, label: t.skills.csharp, class: "hover:fill-csharp dark:hover:fill-csharp hover:text-csharp hover:border-csharp", remove: ""},
+    {name: 'linkedin', icon: LinkedinIcon, label: t.skills.linkedin, class: "hover:fill-linkedin dark:hover:fill-linkedin hover:text-linkedin hover:border-linkedin", remove: ""},
+    {name: 'email', icon: EmailIcon, label: t.skills.email, class: "hover:fill-email dark:hover:fill-email hover:text-email hover:border-email", remove: ""},
+    {name: 'cv', icon: CVIcon, label: t.skills.cv, class: "hover:fill-cv dark:hover:fill-cv hover:text-cv hover:border-cv", remove: ""},
+]
+
+const mode_class = (mode === 'vertical')? 'flex-col py-6 dark:text-white dark:fill-white ': 'flex-row border-primary dark:border-accent dark:border-2 border rounded-full py-1 px-2 sm:px-3 lg:px-2 my-2 gap-x-1 sm:gap-x-1 2xl:gap-x-2 bg-white dark:bg-neutral-700 dark:text-white dark:fill-white dark:hover:bg-neutral-100 ';
+const icon_class = (mode === 'vertical')? 'size-10': 'size-6';
+const link_class= (link)? ' cursor-pointer':' cursor-default';
+
+const defaultIcon = {name: skill, icon: HtmlIcon, label: skill, class: "", remove: ""};
+const icon_find = IconsMap.find(element => element.name === skill);
+const Icon = (icon_find) ? icon_find: defaultIcon;
+
+---
+<skill-item data-name={Icon.name} data-remove={Icon.remove}>
+    <a href={link} target={target}>
+        <li class={"skill flex justify-center items-center transition duration-300 ease-in-out hover:scale-110 " + mode_class + Icon.class + link_class}>
+            <Icon.icon class={icon_class} title={Icon.label}/>
+            {(mode === 'h-no-label')? '' : <span class="hidden md:block line-clamp-1 text-center text-sm lg:text-md xl:text-[1rem] text-nowrap">{Icon.label}</span> }
+        </li>
+    </a>
+</skill-item>
+
+<style>
+    html[data-theme="dark"] .skill .nopath-moodle{
+        fill: red!important;
+        color:red;
+    }
+</style>
+<script>
+
+    const manyColors = ['vue', 'figma', 'argocd', 'vmware', 'aws'];
+    const removalColors = ['vue', 'argocd', 'vmware'];
+    const hasColors = ['vue', 'astro', 'moodle', 'figma', 'argocd', 'vmware', 'aws'];
+    class SkillItem extends HTMLElement{
+
+        private skill;
+        private paths;
+
+        constructor() {
+            super();
+            this.skill = {
+                name: this.dataset.name,
+                remove: this.dataset.remove,
+            }
+            this.paths = this.getElementsByClassName('path-' + this.skill.name);
+
+            if(hasColors.includes(this.skill.name)){
+                this.toogleFill(false);
+                let skillitem = this;
+                this.addEventListener('mouseenter', (e) => {
+                    skillitem.toogleFill(true);
+                });
+
+                this.addEventListener('mouseleave', (e) => {
+                    skillitem.toogleFill(false);
+                });
+            }
+        }
+        toogleFill(show){
+            Array.prototype.forEach.call(this.paths, (path, key) => {
+                if(manyColors.includes(this.skill.name)){
+                    path.classList[show?'add':'remove']('fill-' + this.skill.name + '-' + key);
+                    if(removalColors.includes(this.skill.name)){
+                        let removals = this.skill.remove.split(',');
+                        let removal_theme = removals[key].split(' ');
+                        Array.prototype.forEach.call(removal_theme, (removal) => {
+                            path.classList[show?'remove':'add'](removal);
+                        });
+                    }
+                }else{
+                    path.classList[show?'add':'remove']('fill-' + this.skill.name);
+                    let removal_theme = this.skill.remove.split(' ');
+                    Array.prototype.forEach.call(removal_theme, (removal) => {
+                        path.classList[show?'remove':'add'](removal);
+                    });
+                }
+            });
+        }
+
+    }
+
+    customElements.define('skill-item', SkillItem);
+
+</script>
